@@ -27,5 +27,20 @@ TITLE.word = gsub("<title>", "", TITLE.word)
 TITLE.word = gsub("</title>", "", TITLE.word)
 TITLE.word
 
-
+#HTML基本語法介紹(4)
+#有了這樣的概念之後，我們再看看一個更複雜的例子，也就是我們想抓到「等候掛號人數：」後面的人數：
+#這個例子的複雜之處在於我們沒有辦法簡單的利用正則表達式來抓取他，這是因為以tr結尾的有非常多，所以我們必須分開抓取：
+start.pos = gregexpr("<tr>", txt_new)
+end.pos = gregexpr("</tr>", txt_new)
+i = 1
+sub.start.pos = start.pos[[1]][i]
+sub.end.pos = end.pos[[1]][i] + attr(end.pos[[1]], "match.length")[i] - 1
+sub_txt = substr(txt_new, sub.start.pos, sub.end.pos)
+sub_txt
+#如果「等候掛號人數」，你可以透過這種方式拿取：
+sub_txt = gsub('等候掛號人數：', '', sub_txt)
+sub_txt = gsub('</?tr>', '', sub_txt)
+sub_txt = gsub('</?td>', '', sub_txt)
+sub_txt = gsub(' ', '', sub_txt)
+sub_txt
 
