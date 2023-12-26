@@ -10,6 +10,19 @@ website
 #你可以透過下面這個方式找到電腦目前的cookie共有哪些：
 #接著你會發現原來在我們點擊這個選項之後，電腦會記錄住一個cookie叫做「over18」，而他的值是「1」：
 
+#使用cookie(3)
+#使用cookie讀取網頁需要用到套件「RCurl」，讓我們看看要怎樣處理：
+library(RCurl)
+URL = 'https://www.ptt.cc/bbs/Gossiping/index.html'
+curl = getCurlHandle()
+curlSetOpt(cookie = "over18=1", followlocation = TRUE, curl = curl)
+
+html_character = getURL(URL, curl = curl)
+
+website = read_html(html_character)
+needed_html = website %>% html_nodes("a")
+needed_txt = needed_html %>% html_text()
+needed_txt
 
 
 
