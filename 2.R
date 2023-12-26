@@ -23,3 +23,15 @@ intrested_pos = grep("[徵女]", needed_txt, fixed = TRUE)
 needed_txt[intrested_pos]
 #我更有興趣的可能是這篇文章的連結，你會發現文章連結藏在needed_html裡面，我們可以透過這種方式拿到：
 needed_link = needed_html[intrested_pos] %>% html_attr("href")
+
+#利用套件執行任務(3)
+#現在我們到其中一篇文章來看看，我們想要知道這篇文章的基本資料，你會發現他們都被span標籤給抓到，但跟span有關的有太多了，我們注意到他有一個特殊的class叫做article-meta-value，我們可以用這種方式叫到他
+i = 1
+sub_link = paste("https://www.ptt.cc", needed_link[i], sep = "")
+sub_website = read_html(sub_link) 
+
+article_info = sub_website %>% html_nodes(".article-meta-value")
+article_info
+
+
+
